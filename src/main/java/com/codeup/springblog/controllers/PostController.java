@@ -47,13 +47,16 @@ public class PostController {
     }
 
     @GetMapping("/posts/create")
-    public String showCreateForm() {
+    public String showCreateForm(Model model) {
+        model.addAttribute("newPost", new Post());
         return "posts/create";
     }
 
     @PostMapping("/posts/create")
-    public String submitCreatePost(@RequestParam(name = "title") String title, @RequestParam(name = "body") String body) {
-        Post newPost = new Post(title, body);
+    public String submitCreatePost(@ModelAttribute Post newPost)
+//    public String submitCreatePost(@RequestParam(name = "title") String title, @RequestParam(name = "body") String body)
+    {
+//        Post newPost = new Post(title, body);
         newPost.setUser(usersDao.getById(1L));
         postsDao.save(newPost);
 
@@ -68,10 +71,12 @@ public class PostController {
     }
 
     @PostMapping("/posts/{id}/edit")
-    public String submitEdit(@RequestParam(name = "title") String title, @RequestParam(name = "body") String body, @PathVariable long id) {
-        Post postToEdit = postsDao.getById(id);
-        postToEdit.setTitle(title);
-        postToEdit.setBody(body);
+    public String submitEdit(@ModelAttribute Post postToEdit, @PathVariable long id)
+//    public String submitEdit(@RequestParam(name = "title") String title, @RequestParam(name = "body") String body, @PathVariable long id)
+    {
+//        Post postToEdit = postsDao.getById(id);
+//        postToEdit.setTitle(title);
+//        postToEdit.setBody(body);
         postsDao.save(postToEdit);
         return "redirect:/posts";
     }
