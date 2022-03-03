@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<!--Thymeleaf attribute -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Single Post</title>
+
+</head>
+<body>
+<div>
+<h3><span th:text="${individualPost.getTitle()}"></span></h3>
+<p><span th:text="${individualPost.getBody()}"></span></p>
+</div>
+
+</body>
+</html>

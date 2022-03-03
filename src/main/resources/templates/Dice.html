@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!--Thymeleaf attribute -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dice Home</title>
+    <!--    Thymeleaf attribute container (th: block) used include for header partial named styling-->
+    <th:block th:include="/partials/header :: styling"></th:block>
+</head>
+<body>
+<!-- used replace to include the navbar partial fragment from navbar.html, will display the navbar-->
+<div th:replace="/partials/navbar.html :: navbar"></div>
+<br>
+<h3>Hello! Please pick a link to guess a number from 1 - 6: </h3>
+<br>
+<p><a href="dice.html" th:href="@{http://localhost:8080/roll-dice/1}">Click Here to Guess #1!</a></p>
+<p><a href="dice.html" th:href="@{http://localhost:8080/roll-dice/2}">Click Here to Guess #2!</a></p>
+<p><a href="dice.html" th:href="@{http://localhost:8080/roll-dice/3}">Click Here to Guess #3!</a></p>
+<p><a href="dice.html" th:href="@{http://localhost:8080/roll-dice/4}">Click Here to Guess #4!</a></p>
+<p><a href="dice.html" th:href="@{http://localhost:8080/roll-dice/5}">Click Here to Guess #5!</a></p>
+<p><a href="dice.html" th:href="@{http://localhost:8080/roll-dice/6}">Click Here to Guess #6!</a></p>
+
+<!--displays data/result from the dicecontroller into the HTML-->
+<p th:text="${result}"></p>
+
+<!--    Thymeleaf attribute container (th: block) used replace to include header partial named scripts-->
+<th:block th:replace="/partials/header :: scripts"></th:block>
+
+<!--    Thymeleaf attribute container (th: block) used replace to include footer partial named footer-->
+<div th:replace="/partials/footer.html :: footer"></div>
+</body>
+</html>

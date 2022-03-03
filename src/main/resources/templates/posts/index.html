@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<!--Thymeleaf attribute -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+
+</head>
+<body>
+<div th:each="post : ${allPosts}">
+    <h3><span th:text="${post.getTitle()}"></span></h3>
+    <p><span th:text="${post.getBody()}"></span></p>
+</div>
+</body>
+</html>
