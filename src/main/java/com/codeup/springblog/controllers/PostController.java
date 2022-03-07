@@ -1,9 +1,11 @@
 package com.codeup.springblog.controllers;
 
 import com.codeup.springblog.models.Post;
+import com.codeup.springblog.models.User;
 import com.codeup.springblog.repositories.PostRepository;
 import com.codeup.springblog.repositories.UserRepository;
 import com.codeup.springblog.services.EmailService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -60,7 +62,9 @@ public class PostController {
 //    public String submitCreatePost(@RequestParam(name = "title") String title, @RequestParam(name = "body") String body)
     {
 //        Post newPost = new Post(title, body);
-        newPost.setUser(usersDao.getById(1L));
+//        newPost.setUser(usersDao.getById(1L));
+        newPost.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()
+        );
         emailService.prepareAndSend(newPost, "Testing post creation", "This is a test email.");
         postsDao.save(newPost);
 
@@ -70,18 +74,25 @@ public class PostController {
     @GetMapping("/posts/{id}/edit")
     public String showEditForm(@PathVariable long id, Model model) {
         Post postToEdit = postsDao.getById(id);
-        model.addAttribute("postToEdit", postToEdit);
-        return "posts/edit";
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (postToEdit.getUser().getId() == loggedInUser.getId()) {
+            model.addAttribute("postToEdit", postToEdit);
+            return "posts/edit";
+        } else {
+            return "redirect:/posts";
+        }
     }
 
     @PostMapping("/posts/{id}/edit")
-    public String submitEdit(@ModelAttribute Post postToEdit, @PathVariable long id)
+    public String submitEdit(@ModelAttribute Post postToEdit, @PathVariable long id) {
 //    public String submitEdit(@RequestParam(name = "title") String title, @RequestParam(name = "body") String body, @PathVariable long id)
-    {
 //        Post postToEdit = postsDao.getById(id);
 //        postToEdit.setTitle(title);
 //        postToEdit.setBody(body);
-        postsDao.save(postToEdit);
+        if (postsDao.getById(id).getUser().getId() == ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId()) {
+            postToEdit.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+            postsDao.save(postToEdit);
+        }
         return "redirect:/posts";
     }
 

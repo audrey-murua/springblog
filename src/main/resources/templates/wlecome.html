@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome</title>
+  <!--    Templating-->
+  <th:block th:include="partials/header.html :: styling"></th:block>
+</head>
+<body>
+<nav th:replace="partials/navbar :: navbar"></nav>
+<h1>Welcome!</h1>
+<th:block th:include="partials/footer.html :: scripts"></th:block>
+</body>
+</html>
