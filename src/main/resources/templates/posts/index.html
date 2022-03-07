@@ -4,12 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
-
+    <th:block th:include="/partials/header :: styling"></th:block>
 </head>
 <body>
+<div th:replace="/partials/navbar.html :: navbar"></div>
+<h1>Here are all of the posts</h1>
 <div th:each="post : ${allPosts}">
     <h3><span th:text="${post.getTitle()}"></span></h3>
     <p><span th:text="${post.getBody()}"></span></p>
 </div>
+<th:block th:replace="/partials/header :: scripts"></th:block>
 </body>
 </html>
